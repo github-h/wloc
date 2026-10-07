@@ -1,6 +1,7 @@
 node_modules/
 .npm-cache/
 .wrangler/
+.vercel/
 .dev.vars*
 .env*
 !.env.example

@@ -561,6 +561,8 @@ npm run deploy
 
 本项目使用 Node.js 22 或更新版本；Wrangler 已固定到锁文件。部署不需要 KV 或数据库。Cloudflare Pages 配置也保留，见[部署说明](docs/DEPLOYMENT.md)。
 
+也可以用 Vercel 部署：导入仓库时把 Root Directory 设为 `vercel` 即可零配置运行（应用代码与 `worker/src` 一致）。注意 Vercel 会保留含坐标参数的函数运行日志且无法完全关闭，详见[部署说明](docs/DEPLOYMENT.md)。
+
 原作者的公共 Worker 和 Pages 不再作为默认选点服务；上方设置位置快捷指令已使用本仓库的新解析服务，自行部署时可按实际地址迁移。新维护者在 `project.config.json` 中填写仓库、发布分支及可选的选点站点，再运行：
 
 ```sh

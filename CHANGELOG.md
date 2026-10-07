@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- 新增 `vercel/` 独立适配目录，支持 Vercel 零配置部署（Root Directory 设为 `vercel`）；应用代码由 `npm run sync:vercel` 从 `worker/src` 同步并经 `npm run check` 校验。
 - README 直接显示完整模块订阅和快捷指令安装 URL；选点网页增加五种客户端的订阅地址列表。
 - 补回原作者的设置位置、清理恢复快捷指令分享链接与地图调用步骤，补充旧 Worker 地址的迁移方法。
 - 从原作者 529fcd8 恢复维护基线，保留 46 条 Git 历史和 AGPL LICENSE。

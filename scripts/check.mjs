@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { generatedFiles } from './configure.mjs';
+import { syncedFiles } from './sync-vercel.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const { config, files } = await generatedFiles();
@@ -10,6 +11,10 @@ const errors = [];
 for (const [name, expected] of files) {
   const actual = await readFile(path.join(root, name), 'utf8').catch(() => '');
   if (actual.replaceAll('\r\n', '\n') !== expected) errors.push(`${name} 与配置不一致，请运行 npm run configure`);
+}
+for (const [name, expected] of await syncedFiles()) {
+  const actual = await readFile(path.join(root, 'vercel/src', name), 'utf8').catch(() => '');
+  if (actual.replaceAll('\r\n', '\n') !== expected) errors.push(`vercel/src/${name} 与 worker/src 不同步，请运行 npm run sync:vercel`);
 }
 if (/YOUR_GITHUB_OWNER/.test(config.repository)) {
   if (process.argv.includes('--release')) errors.push('尚未填写你的 GitHub 仓库地址');

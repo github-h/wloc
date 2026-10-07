@@ -2,7 +2,7 @@
 
 提交前阅读 docs/PROVENANCE.md 和 NOTICE.md，保留原作者和已有贡献者署名。
 
-使用 Node.js 22+，运行 `npm --prefix worker ci` 安装锁定依赖。修改模块请编辑 `templates/modules/`，再运行 `npm run configure`；运行地址统一由 `project.config.json` 控制。
+使用 Node.js 22+，运行 `npm --prefix worker ci` 安装锁定依赖。修改模块请编辑 `templates/modules/`，再运行 `npm run configure`；运行地址统一由 `project.config.json` 控制。修改 `worker/src/` 后运行 `npm run sync:vercel`，保持 Vercel 适配目录同步。
 
 提交时说明具体触发条件、修改后的行为和验证结果。坐标转换或客户端兼容修复应添加能够重现真实问题的测试。不要直接将格式化后的 dist 当成已恢复的原始源码。
 

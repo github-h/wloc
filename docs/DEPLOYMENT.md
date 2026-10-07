@@ -43,6 +43,35 @@ npm run pages:deploy
 
 同时修改项目名时也检查 `wrangler.pages.jsonc`；两个配置的 compatibility_date 保持一致。不要把两个配置的 name 当成域名。
 
+## Vercel
+
+`vercel/` 是独立的 Vercel 适配目录，自带 `worker/src` 的同步副本和 `hono` 依赖，不依赖 `worker/` 目录。Vercel 对 Hono 提供零配置支持：识别 `vercel/index.js` 对 Hono 应用的默认导出，自动把全部路由（首页、`/api/parse`）部署为 Functions，不需要 `vercel.json`。
+
+> [!IMPORTANT]
+> Vercel 的入口检测只匹配入口文件中的裸包导入 `from "hono"`，不识别 `hono/tiny` 等子路径。不要删除或改动 `vercel/index.js` 中的 `import "hono";`。
+>
+> 该目录必须自包含：部署时只安装 `vercel/node_modules`，Node 解析不会横向使用 `worker/node_modules`。修改 `worker/src/` 后运行 `npm run sync:vercel` 再提交，不要直接编辑 `vercel/src/`。
+
+### Git 导入
+
+1. Vercel → Add New Project → 导入仓库；
+2. Root Directory 点 Edit，选择 `vercel`（检测以项目根目录为准，必须指向该目录）；
+3. Framework Preset 应自动识别为 Hono，未识别时手动选择 Hono；
+4. Deploy。
+
+### CLI
+
+```sh
+cd vercel
+npx vercel login
+npx vercel
+npx vercel deploy --prod
+```
+
+### 日志差异
+
+Cloudflare 配置显式关闭了 `observability`；Vercel 会保留函数运行日志，且请求 URL 中含坐标参数，免费额度无法完全关闭。对日志要求严格时优先使用 Cloudflare 部署。
+
 ## 部署后检查
 
 - 首页正常加载，底部源码入口指向实际发布仓库。

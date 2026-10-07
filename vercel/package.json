@@ -1,0 +1,13 @@
+{
+  "name": "wloc-vercel",
+  "private": true,
+  "type": "module",
+  "license": "AGPL-3.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "hono": "4.13.0",
+    "wloc-community": "file:.."
+  }
+}
